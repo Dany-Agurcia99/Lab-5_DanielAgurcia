@@ -1,18 +1,22 @@
 package lab5_danielagurcia;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 public class Empresa {
 
     String nombre;
     int capital_financiero;
-    int fecha_fundacion;
+    Date fecha_fundacion;
     String ubicacion;
     int id_sucursal;
     String pin_acceso;
+    ArrayList<Empleado> lista_empleado = new ArrayList();
 
     public Empresa() {
     }
 
-    public Empresa(String nombre, int capital_financiero, int fecha_fundacion, String ubicacion, int id_sucursal, String pin_acceso) {
+    public Empresa(String nombre, int capital_financiero, Date fecha_fundacion, String ubicacion, int id_sucursal, String pin_acceso) {
         this.nombre = nombre;
         this.capital_financiero = capital_financiero;
         this.fecha_fundacion = fecha_fundacion;
@@ -37,11 +41,11 @@ public class Empresa {
         this.capital_financiero = capital_financiero;
     }
 
-    public int getFecha_fundacion() {
+    public Date getFecha_fundacion() {
         return fecha_fundacion;
     }
 
-    public void setFecha_fundacion(int fecha_fundacion) {
+    public void setFecha_fundacion(Date fecha_fundacion) {
         this.fecha_fundacion = fecha_fundacion;
     }
 

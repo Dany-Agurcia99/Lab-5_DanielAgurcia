@@ -5,6 +5,11 @@
  */
 package lab5_danielagurcia;
 
+import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Daniel Agurcia
@@ -50,6 +55,7 @@ public class Manejador_Empresas extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         pf_pin_acceso = new javax.swing.JPasswordField();
         jLabel12 = new javax.swing.JLabel();
+        jb_crearempresa = new javax.swing.JButton();
         jd_crear_usuario = new javax.swing.JDialog();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
@@ -79,6 +85,7 @@ public class Manejador_Empresas extends javax.swing.JFrame {
 
         jb_crear_empleado.setText("Crear Empleado");
 
+        jl_lista_empleados.setModel(new DefaultListModel());
         jScrollPane2.setViewportView(jl_lista_empleados);
 
         jb_logout.setText("Logout");
@@ -138,7 +145,7 @@ public class Manejador_Empresas extends javax.swing.JFrame {
 
         jLabel10.setText("ID de la Sucursal");
 
-        cb_capital_financiero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cb_capital_financiero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "80000", "120000", "169000" }));
 
         tf_id_sucursal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -149,6 +156,13 @@ public class Manejador_Empresas extends javax.swing.JFrame {
         jLabel11.setText("Pin de Acceso");
 
         jLabel12.setText("Crear Empresa");
+
+        jb_crearempresa.setText("Crear");
+        jb_crearempresa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_crearempresaMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jd_crear_empresaLayout = new javax.swing.GroupLayout(jd_crear_empresa.getContentPane());
         jd_crear_empresa.getContentPane().setLayout(jd_crear_empresaLayout);
@@ -185,13 +199,16 @@ public class Manejador_Empresas extends javax.swing.JFrame {
                                         .addComponent(tf_id_sucursal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(jd_crear_empresaLayout.createSequentialGroup()
                         .addGap(143, 143, 143)
-                        .addComponent(jLabel12)))
+                        .addComponent(jLabel12))
+                    .addGroup(jd_crear_empresaLayout.createSequentialGroup()
+                        .addGap(138, 138, 138)
+                        .addComponent(jb_crearempresa)))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
         jd_crear_empresaLayout.setVerticalGroup(
             jd_crear_empresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jd_crear_empresaLayout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel12)
                 .addGap(18, 18, 18)
                 .addGroup(jd_crear_empresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -217,7 +234,9 @@ public class Manejador_Empresas extends javax.swing.JFrame {
                 .addGroup(jd_crear_empresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(pf_pin_acceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jb_crearempresa)
+                .addGap(8, 8, 8))
         );
 
         jLabel13.setText("Nombre Completo");
@@ -233,6 +252,11 @@ public class Manejador_Empresas extends javax.swing.JFrame {
         jLabel17.setText("Crear Empleado");
 
         jb_ingresar_empleado.setText("Crear Empleado");
+        jb_ingresar_empleado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_ingresar_empleadoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jd_crear_usuarioLayout = new javax.swing.GroupLayout(jd_crear_usuario.getContentPane());
         jd_crear_usuario.getContentPane().setLayout(jd_crear_usuarioLayout);
@@ -304,8 +328,18 @@ public class Manejador_Empresas extends javax.swing.JFrame {
         jLabel3.setText("Pin de Acceso");
 
         jb_crear_empresa.setText("Crear Empresa");
+        jb_crear_empresa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_crear_empresaMouseClicked(evt);
+            }
+        });
 
         jb_entrar.setText("Entrar");
+        jb_entrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_entrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -359,6 +393,78 @@ public class Manejador_Empresas extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tf_id_sucursalActionPerformed
 
+    private void jb_entrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_entrarActionPerformed
+        boolean acceso = false;
+        try {
+            int id = Integer.parseInt(tf_id_acceso.getText());
+            String password = pf_pin_acceso_principal.getText();
+            for (Empresa temp : lista_empresas) {
+                if (temp.getId_sucursal() == id && temp.getPin_acceso().equals(password)) {
+                    acceso = true;
+                    empresa_ingresada = temp;
+                }
+            }
+            if (acceso == true) {
+                jl_nombre_empresa.setText(empresa_ingresada.getNombre());
+                jl_id_empresa.setText(String.valueOf(empresa_ingresada.getId_sucursal()));
+                jd_principal.pack();
+                jd_principal.setModal(true);
+                jd_principal.setLocationRelativeTo(this);
+                jd_principal.setVisible(true);
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "id o pin incorrecto");
+            }
+        } catch (Exception NumberFormatException) {
+            JOptionPane.showMessageDialog(this, "Porfavor Ingrese un Id valido");
+        }
+    }//GEN-LAST:event_jb_entrarActionPerformed
+
+    private void jb_crear_empresaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_crear_empresaMouseClicked
+        jd_crear_empresa.pack();
+        jd_crear_empresa.setModal(true);
+        jd_crear_empresa.setLocationRelativeTo(this);
+        jd_crear_empresa.setVisible(true);
+    }//GEN-LAST:event_jb_crear_empresaMouseClicked
+
+    private void jb_crearempresaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_crearempresaMouseClicked
+        try {
+            String nombre = tf_nombre_empresa.getText();
+            int capital = Integer.parseInt(cb_capital_financiero.getSelectedItem().toString());
+            System.out.println(capital);
+            Date fecha = jd_fechafundacion_empresa.getDate();
+            String ubicacion = tf_ubicacion_sucursal.getText();
+            int id = Integer.parseInt(tf_id_sucursal.getText());
+            String pin = pf_pin_acceso.getText();
+            boolean vali_pin = false;
+            for (Empresa temp : lista_empresas) {
+                if (temp.getPin_acceso().equals(pin)) {
+                    vali_pin = true;
+                }
+            }
+            if (vali_pin == true) {
+                JOptionPane.showMessageDialog(evt.getComponent(), "El id que ingreso ya existe, porfavor ingrese otro id");
+            } else {
+                Empresa x = new Empresa(nombre, capital, fecha, ubicacion, id, pin);
+                tf_nombre_empresa.setText("");
+                cb_capital_financiero.setSelectedItem(0);
+                jd_fechafundacion_empresa.setDate(new Date());
+                tf_ubicacion_sucursal.setText("");
+                tf_id_sucursal.setText("");
+                pf_pin_acceso.setText("");
+                JOptionPane.showMessageDialog(evt.getComponent(), "Empresa creada Exitosamente");
+                lista_empresas.add(x);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(evt.getComponent(), "Ocurrio un error y no se guardaron los datos");
+        }
+        jd_crear_empresa.dispose();
+    }//GEN-LAST:event_jb_crearempresaMouseClicked
+
+    private void jb_ingresar_empleadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_ingresar_empleadoMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jb_ingresar_empleadoMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -393,7 +499,8 @@ public class Manejador_Empresas extends javax.swing.JFrame {
             }
         });
     }
-
+    ArrayList<Empresa> lista_empresas = new ArrayList();
+    Empresa empresa_ingresada;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cb_Cargo_empleado;
     private javax.swing.JComboBox<String> cb_capital_financiero;
@@ -416,6 +523,7 @@ public class Manejador_Empresas extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton jb_crear_empleado;
     private javax.swing.JButton jb_crear_empresa;
+    private javax.swing.JButton jb_crearempresa;
     private javax.swing.JButton jb_entrar;
     private javax.swing.JButton jb_ingresar_empleado;
     private javax.swing.JButton jb_logout;
