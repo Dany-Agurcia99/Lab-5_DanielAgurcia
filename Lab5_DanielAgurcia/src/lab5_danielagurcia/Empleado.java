@@ -1,5 +1,6 @@
 package lab5_danielagurcia;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Empleado {
@@ -9,8 +10,17 @@ public class Empleado {
     String correo;
     String cargo;
     int salario;
+    ArrayList<Empleado> lista_contratados = new ArrayList();
 
     public Empleado() {
+    }
+
+    public ArrayList<Empleado> getLista_contratados() {
+        return lista_contratados;
+    }
+
+    public void setLista_contratados(ArrayList<Empleado> lista_contratados) {
+        this.lista_contratados = lista_contratados;
     }
 
     public Empleado(String nombre, Date fecha_nacimiento, String correo, String cargo, int salario) {

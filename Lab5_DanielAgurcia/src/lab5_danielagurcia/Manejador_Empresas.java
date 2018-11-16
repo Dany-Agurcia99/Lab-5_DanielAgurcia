@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  *
@@ -67,6 +69,11 @@ public class Manejador_Empresas extends javax.swing.JFrame {
         cb_Cargo_empleado = new javax.swing.JComboBox<>();
         jLabel17 = new javax.swing.JLabel();
         jb_ingresar_empleado = new javax.swing.JButton();
+        popup = new javax.swing.JPopupMenu();
+        jmi_modificar = new javax.swing.JMenuItem();
+        jmi_eliminar = new javax.swing.JMenuItem();
+        jmi_ver_detalles = new javax.swing.JMenuItem();
+        jmi_contratar = new javax.swing.JMenuItem();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -75,17 +82,29 @@ public class Manejador_Empresas extends javax.swing.JFrame {
         jb_crear_empresa = new javax.swing.JButton();
         jb_entrar = new javax.swing.JButton();
 
+        jl_nombre_empresa.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jl_nombre_empresa.setText("jLabel4");
 
+        jl_id_empresa.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jl_id_empresa.setText("jLabel5");
 
-        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Empresas");
         jt_empresas.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         jScrollPane1.setViewportView(jt_empresas);
 
         jb_crear_empleado.setText("Crear Empleado");
+        jb_crear_empleado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_crear_empleadoMouseClicked(evt);
+            }
+        });
 
         jl_lista_empleados.setModel(new DefaultListModel());
+        jl_lista_empleados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jl_lista_empleadosMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jl_lista_empleados);
 
         jb_logout.setText("Logout");
@@ -110,8 +129,9 @@ public class Manejador_Empresas extends javax.swing.JFrame {
                                 .addComponent(jb_crear_empleado)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jd_principalLayout.createSequentialGroup()
+                        .addGap(41, 41, 41)
                         .addComponent(jl_nombre_empresa)
-                        .addGap(265, 265, 265)
+                        .addGap(224, 224, 224)
                         .addComponent(jl_id_empresa)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
@@ -126,7 +146,7 @@ public class Manejador_Empresas extends javax.swing.JFrame {
                 .addGroup(jd_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_principalLayout.createSequentialGroup()
-                        .addGap(0, 91, Short.MAX_VALUE)
+                        .addGap(0, 75, Short.MAX_VALUE)
                         .addComponent(jb_crear_empleado)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jd_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,6 +339,18 @@ public class Manejador_Empresas extends javax.swing.JFrame {
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
+        jmi_modificar.setText("Modificar");
+        popup.add(jmi_modificar);
+
+        jmi_eliminar.setText("Eliminar");
+        popup.add(jmi_eliminar);
+
+        jmi_ver_detalles.setText("Ver Detalles");
+        popup.add(jmi_ver_detalles);
+
+        jmi_contratar.setText("Contratar");
+        popup.add(jmi_contratar);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Bienvenido");
@@ -406,14 +438,26 @@ public class Manejador_Empresas extends javax.swing.JFrame {
             }
             if (acceso == true) {
                 jl_nombre_empresa.setText(empresa_ingresada.getNombre());
-                jl_id_empresa.setText(String.valueOf(empresa_ingresada.getId_sucursal()));
+                jl_id_empresa.setText("ID: " + String.valueOf(empresa_ingresada.getId_sucursal()));
+                DefaultTreeModel modelo_arbol = (DefaultTreeModel) jt_empresas.getModel();
+                DefaultMutableTreeNode nombre = new DefaultMutableTreeNode(new DefaultMutableTreeNode(empresa_ingresada.getNombre()));
+                modelo_arbol.setRoot(nombre);
+                DefaultMutableTreeNode nodo_empresa = (DefaultMutableTreeNode) modelo_arbol.getRoot();
+                for (Empleado temp : empresa_ingresada.getLista_empleados()) {
+                    DefaultMutableTreeNode nodo_empleado = new DefaultMutableTreeNode(temp);
+                    for (Empleado temp2 : temp.getLista_contratados()) {
+                        DefaultMutableTreeNode nodo_contratado = new DefaultMutableTreeNode(temp2);
+                        nodo_empleado.add(nodo_contratado);
+                    }
+                    nodo_empresa.add(nodo_empleado);
+                }
+                modelo_arbol.reload();
                 jd_principal.pack();
                 jd_principal.setModal(true);
                 jd_principal.setLocationRelativeTo(this);
                 jd_principal.setVisible(true);
-                
             } else {
-                JOptionPane.showMessageDialog(this, "id o pin incorrecto");
+                JOptionPane.showMessageDialog(this, "Id o Pin Incorrecto");
             }
         } catch (Exception NumberFormatException) {
             JOptionPane.showMessageDialog(this, "Porfavor Ingrese un Id valido");
@@ -438,7 +482,7 @@ public class Manejador_Empresas extends javax.swing.JFrame {
             String pin = pf_pin_acceso.getText();
             boolean vali_pin = false;
             for (Empresa temp : lista_empresas) {
-                if (temp.getPin_acceso().equals(pin)) {
+                if (temp.getId_sucursal() == id) {
                     vali_pin = true;
                 }
             }
@@ -446,6 +490,7 @@ public class Manejador_Empresas extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(evt.getComponent(), "El id que ingreso ya existe, porfavor ingrese otro id");
             } else {
                 Empresa x = new Empresa(nombre, capital, fecha, ubicacion, id, pin);
+                lista_empresas.add(x);
                 tf_nombre_empresa.setText("");
                 cb_capital_financiero.setSelectedItem(0);
                 jd_fechafundacion_empresa.setDate(new Date());
@@ -453,17 +498,70 @@ public class Manejador_Empresas extends javax.swing.JFrame {
                 tf_id_sucursal.setText("");
                 pf_pin_acceso.setText("");
                 JOptionPane.showMessageDialog(evt.getComponent(), "Empresa creada Exitosamente");
-                lista_empresas.add(x);
+                jd_crear_empresa.dispose();
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(evt.getComponent(), "Ocurrio un error y no se guardaron los datos");
         }
-        jd_crear_empresa.dispose();
+
     }//GEN-LAST:event_jb_crearempresaMouseClicked
 
     private void jb_ingresar_empleadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_ingresar_empleadoMouseClicked
-        // TODO add your handling code here:
+        try {
+            String nombre = tf_nombre_empleado.getText();
+            Date fecha = jd_fechanacimiento_empleado.getDate();
+            String correo = tf_correo_empleado.getText();
+            String cargo = cb_Cargo_empleado.getSelectedItem().toString();
+            int salario = 0;
+            switch (cargo) {
+                case "Ingeniero":
+                    salario = 22000;
+                    break;
+                case "Medico":
+                    salario = 18000;
+                    break;
+                case "Estudiante":
+                    salario = 7600;
+                    break;
+                case "Licenciado":
+                    salario = 12000;
+                    break;
+                case "Maestro":
+                    salario = 2000;
+                    break;
+                default:
+                    break;
+            }
+            Empleado x = new Empleado(nombre, fecha, correo, cargo, salario);
+            DefaultListModel modelo_lista = (DefaultListModel) jl_lista_empleados.getModel();
+            modelo_lista.addElement(x);
+            jl_lista_empleados.setModel(modelo_lista);
+            tf_nombre_empleado.setText("");
+            jd_fechanacimiento_empleado.setDate(new Date());
+            tf_correo_empleado.setText("");
+            cb_Cargo_empleado.setSelectedItem(0);
+            contador_presupuesto += salario;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ocurrio un erro y no se guardaron los datos");
+        }
+        JOptionPane.showMessageDialog(evt.getComponent(), "Empleado Creado Exitosamente");
+        jd_crear_usuario.dispose();
     }//GEN-LAST:event_jb_ingresar_empleadoMouseClicked
+
+    private void jb_crear_empleadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_crear_empleadoMouseClicked
+        jd_crear_usuario.pack();
+        jd_crear_usuario.setModal(true);
+        jd_crear_usuario.setLocationRelativeTo(this);
+        jd_crear_usuario.setVisible(true);
+    }//GEN-LAST:event_jb_crear_empleadoMouseClicked
+
+    private void jl_lista_empleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jl_lista_empleadosMouseClicked
+        if (jl_lista_empleados.getSelectedIndex() >= 0) {
+            if (evt.isMetaDown()) {
+                popup.show(evt.getComponent(), evt.getX(), evt.getY());
+            }
+        }
+    }//GEN-LAST:event_jl_lista_empleadosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -476,7 +574,7 @@ public class Manejador_Empresas extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -501,6 +599,8 @@ public class Manejador_Empresas extends javax.swing.JFrame {
     }
     ArrayList<Empresa> lista_empresas = new ArrayList();
     Empresa empresa_ingresada;
+    int presupuesto_empresa_ingresada;
+    int contador_presupuesto = 0;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cb_Cargo_empleado;
     private javax.swing.JComboBox<String> cb_capital_financiero;
@@ -535,9 +635,14 @@ public class Manejador_Empresas extends javax.swing.JFrame {
     private javax.swing.JLabel jl_id_empresa;
     private javax.swing.JList<String> jl_lista_empleados;
     private javax.swing.JLabel jl_nombre_empresa;
+    private javax.swing.JMenuItem jmi_contratar;
+    private javax.swing.JMenuItem jmi_eliminar;
+    private javax.swing.JMenuItem jmi_modificar;
+    private javax.swing.JMenuItem jmi_ver_detalles;
     private javax.swing.JTree jt_empresas;
     private javax.swing.JPasswordField pf_pin_acceso;
     private javax.swing.JPasswordField pf_pin_acceso_principal;
+    private javax.swing.JPopupMenu popup;
     private javax.swing.JTextField tf_correo_empleado;
     private javax.swing.JTextField tf_id_acceso;
     private javax.swing.JTextField tf_id_sucursal;

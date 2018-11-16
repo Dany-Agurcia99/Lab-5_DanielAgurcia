@@ -11,7 +11,15 @@ public class Empresa {
     String ubicacion;
     int id_sucursal;
     String pin_acceso;
-    ArrayList<Empleado> lista_empleado = new ArrayList();
+    ArrayList<Empleado> lista_empleados = new ArrayList();
+
+    public ArrayList<Empleado> getLista_empleados() {
+        return lista_empleados;
+    }
+
+    public void setLista_empleados(ArrayList<Empleado> lista_empleados) {
+        this.lista_empleados = lista_empleados;
+    }
 
     public Empresa() {
     }
