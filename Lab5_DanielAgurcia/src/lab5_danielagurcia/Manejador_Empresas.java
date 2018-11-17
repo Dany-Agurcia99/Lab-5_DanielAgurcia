@@ -694,19 +694,19 @@ public class Manejador_Empresas extends javax.swing.JFrame {
 
     private void jmi_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_modificarActionPerformed
         DefaultListModel modeloLista = (DefaultListModel) jl_lista_empleados.getModel();
-        Empleado selec = (Empleado) modeloLista.get(jl_lista_empleados.getSelectedIndex());
-        tf_correo_empleado1.setText(selec.getCorreo());
-        tf_nombre_empleado1.setText(selec.getNombre());
-        jd_fechanacimiento_empleado1.setDate(selec.getFecha_nacimiento());
-        if (selec.getCargo().equals("Ingeniero")) {
+        selec2 = (Empleado) modeloLista.get(jl_lista_empleados.getSelectedIndex());
+        tf_correo_empleado1.setText(selec2.getCorreo());
+        tf_nombre_empleado1.setText(selec2.getNombre());
+        jd_fechanacimiento_empleado1.setDate(selec2.getFecha_nacimiento());
+        if (selec2.getCargo().equals("Ingeniero")) {
             cb_Cargo_empleado1.setSelectedItem(0);
-        } else if (selec.getCargo().equals("Medico")) {
+        } else if (selec2.getCargo().equals("Medico")) {
             cb_Cargo_empleado1.setSelectedIndex(1);
-        } else if (selec.getCargo().equals("Estudiante")) {
+        } else if (selec2.getCargo().equals("Estudiante")) {
             cb_Cargo_empleado1.setSelectedIndex(2);
-        } else if (selec.getCargo().equals("Licenciado")) {
+        } else if (selec2.getCargo().equals("Licenciado")) {
             cb_Cargo_empleado1.setSelectedIndex(3);
-        } else if (selec.getCargo().equals("Maestro")) {
+        } else if (selec2.getCargo().equals("Maestro")) {
             cb_Cargo_empleado1.setSelectedIndex(4);
         }
         jl_lista_empleados.setModel(modeloLista);
@@ -808,20 +808,17 @@ public class Manejador_Empresas extends javax.swing.JFrame {
                     salario = 2000;
                     break;
             }
-            DefaultListModel modeloLista = (DefaultListModel) jl_lista_empleados.getModel();
-            Empleado seleccionado = (Empleado) modeloLista.get(jl_lista_empleados.getSelectedIndex());
-            seleccionado.setNombre(nombre);
-            seleccionado.setFecha_nacimiento(fecha);
-            seleccionado.setCorreo(correo);
-            seleccionado.setCargo(cargo);
-            seleccionado.setSalario(salario);
-            jl_lista_empleados.setModel(modeloLista);
+            selec2.setNombre(nombre);
+            selec2.setFecha_nacimiento(fecha);
+            selec2.setCorreo(correo);
+            selec2.setCargo(cargo);
+            selec2.setSalario(salario);
             tf_correo_empleado1.setText("");
             tf_nombre_empleado1.setText("");
             jd_fechanacimiento_empleado1.setDate(new Date());
             cb_Cargo_empleado1.setSelectedIndex(0);
+            jd_principal.dispose();
         } catch (Exception e) {
-            System.out.println("Diego al modificar me tiraba un error de array index out of bounds asaber porque, pero el codigo para modificar esta bueno");
             JOptionPane.showMessageDialog(this, "hubo un error y no se modifico");
         }
     }//GEN-LAST:event_jb_ingresar_empleado1MouseClicked
@@ -864,6 +861,7 @@ public class Manejador_Empresas extends javax.swing.JFrame {
             }
         });
     }
+    Empleado selec2;
     DefaultMutableTreeNode nodo_seleccionado;
     ArrayList<Empresa> lista_empresas = new ArrayList();
     Empresa empresa_ingresada;
