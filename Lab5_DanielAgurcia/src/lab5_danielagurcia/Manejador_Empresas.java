@@ -74,6 +74,19 @@ public class Manejador_Empresas extends javax.swing.JFrame {
         jmi_eliminar = new javax.swing.JMenuItem();
         jmi_ver_detalles = new javax.swing.JMenuItem();
         jmi_contratar = new javax.swing.JMenuItem();
+        jd_modificar = new javax.swing.JDialog();
+        cb_Cargo_empleado1 = new javax.swing.JComboBox<>();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jb_ingresar_empleado1 = new javax.swing.JButton();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        tf_nombre_empleado1 = new javax.swing.JTextField();
+        jd_fechanacimiento_empleado1 = new com.toedter.calendar.JDateChooser();
+        tf_correo_empleado1 = new javax.swing.JTextField();
+        popup_arbol = new javax.swing.JPopupMenu();
+        jmi_detalles_arbol = new javax.swing.JMenuItem();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -90,6 +103,11 @@ public class Manejador_Empresas extends javax.swing.JFrame {
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Empresas");
         jt_empresas.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jt_empresas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jt_empresasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jt_empresas);
 
         jb_crear_empleado.setText("Crear Empleado");
@@ -108,6 +126,11 @@ public class Manejador_Empresas extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jl_lista_empleados);
 
         jb_logout.setText("Logout");
+        jb_logout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_logoutMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jd_principalLayout = new javax.swing.GroupLayout(jd_principal.getContentPane());
         jd_principal.getContentPane().setLayout(jd_principalLayout);
@@ -340,16 +363,124 @@ public class Manejador_Empresas extends javax.swing.JFrame {
         );
 
         jmi_modificar.setText("Modificar");
+        jmi_modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_modificarActionPerformed(evt);
+            }
+        });
         popup.add(jmi_modificar);
 
         jmi_eliminar.setText("Eliminar");
+        jmi_eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_eliminarActionPerformed(evt);
+            }
+        });
         popup.add(jmi_eliminar);
 
         jmi_ver_detalles.setText("Ver Detalles");
+        jmi_ver_detalles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_ver_detallesActionPerformed(evt);
+            }
+        });
         popup.add(jmi_ver_detalles);
 
         jmi_contratar.setText("Contratar");
+        jmi_contratar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_contratarActionPerformed(evt);
+            }
+        });
         popup.add(jmi_contratar);
+
+        cb_Cargo_empleado1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ingeniero", "Medico", "Estudiante", "Licenciado", "Maestro" }));
+
+        jLabel18.setText("Modificar Empleado");
+
+        jLabel19.setText("Nombre Completo");
+
+        jb_ingresar_empleado1.setText("Modificar Empleado");
+        jb_ingresar_empleado1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jb_ingresar_empleado1MouseClicked(evt);
+            }
+        });
+
+        jLabel20.setText("Fecha de Nacimiento");
+
+        jLabel21.setText("Correo Electronico");
+
+        jLabel22.setText("Cargo");
+
+        javax.swing.GroupLayout jd_modificarLayout = new javax.swing.GroupLayout(jd_modificar.getContentPane());
+        jd_modificar.getContentPane().setLayout(jd_modificarLayout);
+        jd_modificarLayout.setHorizontalGroup(
+            jd_modificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_modificarLayout.createSequentialGroup()
+                .addGroup(jd_modificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jd_modificarLayout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(jd_modificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel22)
+                            .addGroup(jd_modificarLayout.createSequentialGroup()
+                                .addComponent(jLabel19)
+                                .addGap(18, 18, 18)
+                                .addComponent(tf_nombre_empleado1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jd_modificarLayout.createSequentialGroup()
+                                .addComponent(jLabel20)
+                                .addGroup(jd_modificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jd_modificarLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jd_fechanacimiento_empleado1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jd_modificarLayout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addGroup(jd_modificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(cb_Cargo_empleado1, 0, 141, Short.MAX_VALUE)
+                                            .addComponent(tf_correo_empleado1)))))
+                            .addComponent(jLabel21)))
+                    .addGroup(jd_modificarLayout.createSequentialGroup()
+                        .addGap(109, 109, 109)
+                        .addComponent(jLabel18))
+                    .addGroup(jd_modificarLayout.createSequentialGroup()
+                        .addGap(101, 101, 101)
+                        .addComponent(jb_ingresar_empleado1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jd_modificarLayout.setVerticalGroup(
+            jd_modificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_modificarLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jLabel18)
+                .addGap(18, 18, 18)
+                .addGroup(jd_modificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jd_modificarLayout.createSequentialGroup()
+                        .addGroup(jd_modificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel19)
+                            .addComponent(tf_nombre_empleado1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(36, 36, 36)
+                        .addComponent(jLabel20))
+                    .addComponent(jd_fechanacimiento_empleado1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(43, 43, 43)
+                .addGroup(jd_modificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(tf_correo_empleado1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
+                .addGroup(jd_modificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel22)
+                    .addComponent(cb_Cargo_empleado1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jb_ingresar_empleado1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jmi_detalles_arbol.setText("Ver Detalles");
+        jmi_detalles_arbol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmi_detalles_arbolActionPerformed(evt);
+            }
+        });
+        popup_arbol.add(jmi_detalles_arbol);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -475,7 +606,6 @@ public class Manejador_Empresas extends javax.swing.JFrame {
         try {
             String nombre = tf_nombre_empresa.getText();
             int capital = Integer.parseInt(cb_capital_financiero.getSelectedItem().toString());
-            System.out.println(capital);
             Date fecha = jd_fechafundacion_empresa.getDate();
             String ubicacion = tf_ubicacion_sucursal.getText();
             int id = Integer.parseInt(tf_id_sucursal.getText());
@@ -540,9 +670,8 @@ public class Manejador_Empresas extends javax.swing.JFrame {
             jd_fechanacimiento_empleado.setDate(new Date());
             tf_correo_empleado.setText("");
             cb_Cargo_empleado.setSelectedItem(0);
-            contador_presupuesto += salario;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Ocurrio un erro y no se guardaron los datos");
+            JOptionPane.showMessageDialog(this.jd_crear_usuario, "Ocurrio un erro y no se guardaron los datos");
         }
         JOptionPane.showMessageDialog(evt.getComponent(), "Empleado Creado Exitosamente");
         jd_crear_usuario.dispose();
@@ -562,6 +691,144 @@ public class Manejador_Empresas extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jl_lista_empleadosMouseClicked
+
+    private void jmi_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_modificarActionPerformed
+        DefaultListModel modeloLista = (DefaultListModel) jl_lista_empleados.getModel();
+        Empleado selec = (Empleado) modeloLista.get(jl_lista_empleados.getSelectedIndex());
+        tf_correo_empleado1.setText(selec.getCorreo());
+        tf_nombre_empleado1.setText(selec.getNombre());
+        jd_fechanacimiento_empleado1.setDate(selec.getFecha_nacimiento());
+        if (selec.getCargo().equals("Ingeniero")) {
+            cb_Cargo_empleado1.setSelectedItem(0);
+        } else if (selec.getCargo().equals("Medico")) {
+            cb_Cargo_empleado1.setSelectedIndex(1);
+        } else if (selec.getCargo().equals("Estudiante")) {
+            cb_Cargo_empleado1.setSelectedIndex(2);
+        } else if (selec.getCargo().equals("Licenciado")) {
+            cb_Cargo_empleado1.setSelectedIndex(3);
+        } else if (selec.getCargo().equals("Maestro")) {
+            cb_Cargo_empleado1.setSelectedIndex(4);
+        }
+        jl_lista_empleados.setModel(modeloLista);
+        jd_modificar.pack();
+        jd_modificar.setModal(true);
+        jd_modificar.setLocationRelativeTo(this);
+        jd_modificar.setVisible(true);
+    }//GEN-LAST:event_jmi_modificarActionPerformed
+
+    private void jmi_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_eliminarActionPerformed
+        if (jl_lista_empleados.getSelectedIndex() >= 0) {
+            DefaultListModel modelo = (DefaultListModel) jl_lista_empleados.getModel();
+            modelo.remove(jl_lista_empleados.getSelectedIndex());
+            jl_lista_empleados.setModel(modelo);
+            JOptionPane.showMessageDialog(this.jd_principal, "Eliminado Exitosamente");
+        }
+
+    }//GEN-LAST:event_jmi_eliminarActionPerformed
+
+    private void jmi_ver_detallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_ver_detallesActionPerformed
+        if (jl_lista_empleados.getSelectedIndex() >= 0) {
+            DefaultListModel modeloLista = (DefaultListModel) jl_lista_empleados.getModel();
+            Empleado selec = (Empleado) modeloLista.get(jl_lista_empleados.getSelectedIndex());
+            JOptionPane.showMessageDialog(this.jd_principal, selec.toString2());
+        }
+    }//GEN-LAST:event_jmi_ver_detallesActionPerformed
+
+    private void jmi_contratarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_contratarActionPerformed
+        if (jl_lista_empleados.getSelectedIndex() >= 0 && jt_empresas.getSelectionPath() != null) {
+            if (nodo_seleccionado.equals(jl_lista_empleados.getSelectedIndex())) {
+                JOptionPane.showMessageDialog(null, "No puede contratarse a si mismo");
+            } else if (nodo_seleccionado.getUserObject() instanceof Empleado) {
+                DefaultListModel modeloLista = (DefaultListModel) jl_lista_empleados.getModel();
+                Empleado selec = (Empleado) modeloLista.get(jl_lista_empleados.getSelectedIndex());
+                jl_lista_empleados.setModel(modeloLista);
+                DefaultTreeModel m = (DefaultTreeModel) jt_empresas.getModel();
+                DefaultMutableTreeNode nodo_raiz = (DefaultMutableTreeNode) m.getRoot();
+                DefaultMutableTreeNode nodo_persona = new DefaultMutableTreeNode(selec);
+                nodo_seleccionado.add(nodo_persona);
+                ((Empleado) nodo_seleccionado.getUserObject()).getLista_contratados().add(selec);
+                m.reload();
+            } else {
+                DefaultListModel modeloLista = (DefaultListModel) jl_lista_empleados.getModel();
+                Empleado selec = (Empleado) modeloLista.get(jl_lista_empleados.getSelectedIndex());
+                jl_lista_empleados.setModel(modeloLista);
+                DefaultTreeModel m = (DefaultTreeModel) jt_empresas.getModel();
+                DefaultMutableTreeNode nodo_raiz = (DefaultMutableTreeNode) m.getRoot();
+                DefaultMutableTreeNode nodo_persona = new DefaultMutableTreeNode(selec);
+                nodo_seleccionado.add(nodo_persona);
+                empresa_ingresada.getLista_empleados().add(selec);
+                m.reload();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this.jd_principal, "Porfavor seleccione una empresa para poder contratar");
+        }
+    }//GEN-LAST:event_jmi_contratarActionPerformed
+
+    private void jt_empresasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jt_empresasMouseClicked
+        if (evt.isMetaDown()) {
+            int row = jt_empresas.getClosestRowForLocation(evt.getX(), evt.getY());
+            jt_empresas.setSelectionRow(row);
+            Object v1 = jt_empresas.getSelectionPath().getLastPathComponent();
+            nodo_seleccionado = (DefaultMutableTreeNode) v1;
+            if (nodo_seleccionado.isRoot()) {
+                popup_arbol.show(evt.getComponent(), evt.getX(), evt.getY());
+            }
+        }
+        int row = jt_empresas.getClosestRowForLocation(evt.getX(), evt.getY());
+        jt_empresas.setSelectionRow(row);
+        Object v1 = jt_empresas.getSelectionPath().getLastPathComponent();
+        nodo_seleccionado = (DefaultMutableTreeNode) v1;
+    }//GEN-LAST:event_jt_empresasMouseClicked
+
+    private void jb_logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_logoutMouseClicked
+        jd_principal.dispose();
+    }//GEN-LAST:event_jb_logoutMouseClicked
+
+    private void jb_ingresar_empleado1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_ingresar_empleado1MouseClicked
+        try {
+            String nombre = tf_nombre_empleado1.getText();
+            Date fecha = jd_fechanacimiento_empleado1.getDate();
+            String correo = tf_correo_empleado1.getText();
+            String cargo = cb_Cargo_empleado1.getSelectedItem().toString();
+            int salario = 0;
+            switch (cargo) {
+                case "Ingeniero":
+                    salario = 22000;
+                    break;
+                case "Medico":
+                    salario = 18000;
+                    break;
+                case "Estudiante":
+                    salario = 7600;
+                    break;
+                case "Licenciado":
+                    salario = 12000;
+                    break;
+                case "Maestro":
+                    salario = 2000;
+                    break;
+            }
+            DefaultListModel modeloLista = (DefaultListModel) jl_lista_empleados.getModel();
+            Empleado seleccionado = (Empleado) modeloLista.get(jl_lista_empleados.getSelectedIndex());
+            seleccionado.setNombre(nombre);
+            seleccionado.setFecha_nacimiento(fecha);
+            seleccionado.setCorreo(correo);
+            seleccionado.setCargo(cargo);
+            seleccionado.setSalario(salario);
+            jl_lista_empleados.setModel(modeloLista);
+            tf_correo_empleado1.setText("");
+            tf_nombre_empleado1.setText("");
+            jd_fechanacimiento_empleado1.setDate(new Date());
+            cb_Cargo_empleado1.setSelectedIndex(0);
+        } catch (Exception e) {
+            System.out.println("Diego al modificar me tiraba un error de array index out of bounds asaber porque, pero el codigo para modificar esta bueno");
+            JOptionPane.showMessageDialog(this, "hubo un error y no se modifico");
+        }
+    }//GEN-LAST:event_jb_ingresar_empleado1MouseClicked
+
+    private void jmi_detalles_arbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmi_detalles_arbolActionPerformed
+        JOptionPane.showMessageDialog(this.jd_principal, empresa_ingresada.toString());
+    }//GEN-LAST:event_jmi_detalles_arbolActionPerformed
 
     /**
      * @param args the command line arguments
@@ -597,12 +864,14 @@ public class Manejador_Empresas extends javax.swing.JFrame {
             }
         });
     }
+    DefaultMutableTreeNode nodo_seleccionado;
     ArrayList<Empresa> lista_empresas = new ArrayList();
     Empresa empresa_ingresada;
     int presupuesto_empresa_ingresada;
     int contador_presupuesto = 0;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cb_Cargo_empleado;
+    private javax.swing.JComboBox<String> cb_Cargo_empleado1;
     private javax.swing.JComboBox<String> cb_capital_financiero;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -613,7 +882,12 @@ public class Manejador_Empresas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -626,16 +900,20 @@ public class Manejador_Empresas extends javax.swing.JFrame {
     private javax.swing.JButton jb_crearempresa;
     private javax.swing.JButton jb_entrar;
     private javax.swing.JButton jb_ingresar_empleado;
+    private javax.swing.JButton jb_ingresar_empleado1;
     private javax.swing.JButton jb_logout;
     private javax.swing.JDialog jd_crear_empresa;
     private javax.swing.JDialog jd_crear_usuario;
     private com.toedter.calendar.JDateChooser jd_fechafundacion_empresa;
     private com.toedter.calendar.JDateChooser jd_fechanacimiento_empleado;
+    private com.toedter.calendar.JDateChooser jd_fechanacimiento_empleado1;
+    private javax.swing.JDialog jd_modificar;
     private javax.swing.JDialog jd_principal;
     private javax.swing.JLabel jl_id_empresa;
     private javax.swing.JList<String> jl_lista_empleados;
     private javax.swing.JLabel jl_nombre_empresa;
     private javax.swing.JMenuItem jmi_contratar;
+    private javax.swing.JMenuItem jmi_detalles_arbol;
     private javax.swing.JMenuItem jmi_eliminar;
     private javax.swing.JMenuItem jmi_modificar;
     private javax.swing.JMenuItem jmi_ver_detalles;
@@ -643,10 +921,13 @@ public class Manejador_Empresas extends javax.swing.JFrame {
     private javax.swing.JPasswordField pf_pin_acceso;
     private javax.swing.JPasswordField pf_pin_acceso_principal;
     private javax.swing.JPopupMenu popup;
+    private javax.swing.JPopupMenu popup_arbol;
     private javax.swing.JTextField tf_correo_empleado;
+    private javax.swing.JTextField tf_correo_empleado1;
     private javax.swing.JTextField tf_id_acceso;
     private javax.swing.JTextField tf_id_sucursal;
     private javax.swing.JTextField tf_nombre_empleado;
+    private javax.swing.JTextField tf_nombre_empleado1;
     private javax.swing.JTextField tf_nombre_empresa;
     private javax.swing.JTextField tf_ubicacion_sucursal;
     // End of variables declaration//GEN-END:variables

@@ -83,7 +83,6 @@ public class Empresa {
 
     @Override
     public String toString() {
-        return nombre;
-    }
-
+        return "Nombre: " + nombre + "\n Capital Financiero: " + capital_financiero + "\n Fecha de Fundacion: " + fecha_fundacion + "\n Ubicacion: " + ubicacion + "\n Id sucursal: " + id_sucursal + "\n Empleados: " + lista_empleados;
+}
 }

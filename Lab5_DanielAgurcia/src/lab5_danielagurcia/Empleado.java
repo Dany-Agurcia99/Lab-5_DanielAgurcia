@@ -71,9 +71,11 @@ public class Empleado {
         this.salario = salario;
     }
 
-    @Override
+    public String toString2() {
+        return "Nombre: " + nombre + "\n fecha de nacimiento: " + fecha_nacimiento + "\n correo: " + correo + "\n cargo: " + cargo + "\n salario: " + salario + "\n lista de contratados: " + lista_contratados;
+    }
+
     public String toString() {
         return nombre;
     }
-
 }
